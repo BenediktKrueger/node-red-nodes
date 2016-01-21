@@ -1,0 +1,15 @@
+{
+  "name": "node-red-wdc-nodes",
+  "version": "0.0.1",
+  "description": "A collection of Watson Developer Cloud services nodes for NodeRED.",
+  "dependencies": {
+    "alchemy-api": "^1.3.0",
+    "cfenv": "~1.0.0",
+    "watson-developer-cloud": "^1.0.6"
+  },
+  "node-red": {
+    "nodes": {
+      "wdc-dialog": "wdc/dialog.js"
+    }
+  }
+}
