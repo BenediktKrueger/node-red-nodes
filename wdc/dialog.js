@@ -58,7 +58,7 @@ module.exports = function (RED) {
 			var message = 'Missing property: msg.payload';
 			node.error(message, msg);
 			return;
-		}
+      }
 
       username = sUsername || this.credentials.username;
       password = sPassword || this.credentials.password;
@@ -116,7 +116,7 @@ module.exports = function (RED) {
 					var message = "Missing Converstaion ID";
 					node.status({fill:"red", shape:"dot", text:message});	
 					node.error(message, msg);	
-				}
+            }
             params.client_id = clientid;
             params.conversation_id = converseid;
           }
@@ -133,19 +133,19 @@ module.exports = function (RED) {
               msg.dialog = dialog_data;		  
               msg.payload = "Check msg.dialog dialog data";
               node.send(msg);
-			}  
+            }  
           });						
       } 	  
     });
   }
  
   //Register the node as wdc-dialog to nodeRED 
-  RED.nodes.registerType(	'wdc-dialog', 
-							WatsonDialogNode, 
-							{credentials: {	username: {type:"text"},
-											password: {type:"password"}
-										  }
-							});
+  RED.nodes.registerType('wdc-dialog', 
+                         WatsonDialogNode, 
+                         {credentials: { username: {type:"text"},
+                                         password: {type:"password"}
+                                       }
+                         });
 							
 };
 
