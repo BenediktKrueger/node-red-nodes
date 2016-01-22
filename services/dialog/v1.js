@@ -35,7 +35,7 @@ module.exports = function (RED) {
     sPassword = service.password;
   }
   
-  RED.httpAdmin.get('/wdc-dialog/vcap', function (req, res) {
+  RED.httpAdmin.get('/service-dialog/vcap', function (req, res) {
 		res.json(service ? {bound_service: true} : null);
   });  
   
@@ -139,8 +139,8 @@ module.exports = function (RED) {
     });
   }
  
-  //Register the node as wdc-dialog to nodeRED 
-  RED.nodes.registerType('wdc-dialog', 
+  //Register the node as service-dialog to nodeRED 
+  RED.nodes.registerType('service-dialog', 
                          WatsonDialogNode, 
                          {credentials: { username: {type:"text"},
                                          password: {type:"password"}

@@ -15,7 +15,7 @@
 -->
 
 <script type="text/javascript">
-    RED.nodes.registerType('wdc-dialog', {
+    RED.nodes.registerType('service-dialog', {
             category: 'IBM Watson',
             defaults: { 
                 name: {value: ""},
@@ -27,10 +27,10 @@
             color: "rgb(140, 198, 63)",
             inputs: 1,
             outputs: 1,
-            icon: "dialog.png",
-            paletteLabel: "WDC Dialog Service Node",
+            icon: "v1.png",
+            paletteLabel: "Dialog Service Node",
             label: function() {
-                return this.name || "WDC Dialog Node";
+                return this.name || "Dialog Node";
             },
             credentials: {
               username: {type:"text"},
@@ -50,7 +50,7 @@
 					}
 				})
 			  
-                $.getJSON('wdc-dialog/vcap/')
+                $.getJSON('service-dialog/vcap/')
                   .done(function (service) {
                     $('.credentials').toggle(!service);
                   })
@@ -65,7 +65,7 @@
 
 
 
-<script type="text/x-red" data-template-name="wdc-dialog">
+<script type="text/x-red" data-template-name="service-dialog">
 	<div class="form-row">
 		<label for="node-input-name"> <i class="icon-tag"> </i> Name </label>
 		<input type="text" id="node-input-name" placeholder="Name"/>
@@ -101,7 +101,7 @@
 	
 </script>
 
-<script type="text/x-red" data-help-name="wdc-dialog">
+<script type="text/x-red" data-help-name="service-dialog">
     <p>Watson Dialog Service, Lists available dialogs and runs a conversation against the dialog</p>
     <p>Use the drop-down menu in the node configuration window to select the required mode.</p>
     <p></p>
