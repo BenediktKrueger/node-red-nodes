@@ -1,5 +1,5 @@
 {
-  "name": "node-red-wdc-nodes",
+  "name": "node-red-contrib-watson-developer-cloud-nodes",
   "version": "0.0.1",
   "description": "A collection of Watson Developer Cloud services nodes for NodeRED.",
   "dependencies": {
@@ -9,7 +9,7 @@
   },
   "node-red": {
     "nodes": {
-      "wdc-dialog": "services/dialog/dialog.js"
+      "wdc-dialog": "services/dialog/v1.js"
     }
   }
 }
