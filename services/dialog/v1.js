@@ -122,7 +122,7 @@ module.exports = function (RED) {
                 converseid = msg.dialog_params["converse_id"];
               }	
             }				  
-		    if (!clientid || "" === clientid) {
+            if (!clientid || "" === clientid) {
               var message = "Missing Client ID";
               node.status({fill:"red", shape:"dot", text:message});	
               node.error(message, msg);	
