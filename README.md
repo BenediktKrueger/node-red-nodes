@@ -5,11 +5,10 @@ This is a collection of Watson Developer Cloud services for NodeRED
 **Currently the only way to incorporate these nodes is to add a dependency to this github repository inside the  
 node red package.json file**
 
-*An example will go here*
+See the documentation in [node-red-labs](https://github.com/watson-developer-cloud/node-red-labs) to see how this is done
 
 *These nodes will be made available as an NPM module*
 
-*Documentation on how to use the service will be added to node-red-labs, once there a link will be added here.*
 
 ## Watson Dialog Service
 This service lists available dialogs and is able to start and runs a conversation against the dialog. Support for

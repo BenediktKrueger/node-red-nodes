@@ -111,12 +111,25 @@
     <p>The list from the service will be returned on <b>msg.dialog</b>.</p>
     <p></p>
     <p><b>Start Conversation Mode</b>.</p>
-    <p>The conversation is started and the introduction salutation from the dialog is returned. 
-	In addition a client id and a converstion id are returned. These ids are needed to continue a conversation.</p> 
+    <p>The conversation is started and the introduction salutation from the dialog is returned.</p>
+    <p>The Dialog Id can be passed either as a property or through a function</p>	
+	<pre><code>
+msg.dialog_params = {};
+msg.dialog_params["dialog_id"] = "dialog id";
+return msg;
+	</code></pre>
+	<p>In addition a client id and a converstion id are returned. These ids are needed to continue a conversation.</p> 
     <p>The salutation from the service will be returned on <b>msg.dialog</b>.</p>
     <p></p>
     <p><b>Conversation Mode</b>.</p>
     <p>The conversation is continued.</p> 
+    <p>The Client and Conversation IDs can be passed either as properties or through a function</p>	
+	<pre><code>
+msg.dialog_params = {};
+msg.dialog_params["client_id"] = "client id";
+msg.dialog_params["converse_id"] = "conversation id";
+return msg;
+	</code></pre>	
     <p>The response from the service will be returned on <b>msg.dialog</b>.</p>
     <p></p>
     <p>For more information about the Watson Dialog service, 

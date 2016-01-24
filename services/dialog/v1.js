@@ -99,8 +99,13 @@ module.exports = function (RED) {
           clientid = config.clientid;
           converseid = config.converse;
 
-          if (!dialogid || "" == dialog)
-          {
+          if (!dialogid || "" == dialogid) {
+            if (msg.dialog_params && "dialog_id" in msg.dialog_params) {
+              dialogid = msg.dialog_params["dialog_id"];
+            }	
+          }				  
+		  
+          if (!dialogid || "" == dialogid) {
             var message = "Missing Dialog ID";
             node.status({fill:"red", shape:"dot", text:message});	
             node.error(message, msg);	
@@ -108,14 +113,24 @@ module.exports = function (RED) {
 			
           if (config.mode === 'converse') {
             if (!clientid || "" === clientid) {
+              if (msg.dialog_params && "client_id" in msg.dialog_params) {
+                clientid = msg.dialog_params["client_id"];
+              }	
+            }				  
+            if (!converseid || "" === converseid) {
+              if (msg.dialog_params && "converse_id" in msg.dialog_params) {
+                converseid = msg.dialog_params["converse_id"];
+              }	
+            }				  
+		    if (!clientid || "" === clientid) {
               var message = "Missing Client ID";
               node.status({fill:"red", shape:"dot", text:message});	
               node.error(message, msg);	
             }
             if (!converseid || "" === converseid) {
-					var message = "Missing Converstaion ID";
-					node.status({fill:"red", shape:"dot", text:message});	
-					node.error(message, msg);	
+              var message = "Missing Converstaion ID";
+              node.status({fill:"red", shape:"dot", text:message});	
+              node.error(message, msg);	
             }
             params.client_id = clientid;
             params.conversation_id = converseid;
