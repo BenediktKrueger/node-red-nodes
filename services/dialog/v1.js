@@ -45,6 +45,7 @@ module.exports = function (RED) {
   // list - retrieves a list of the Dialogs
   // startconverse - initiates a conversation with an existing conversation
   // converse - continues with a started conversation
+  // getprofile - GETs the profile variables associated with the dialog
   function WatsonDialogNode (config) {
     RED.nodes.createNode(this, config);
     var node = this;
@@ -94,7 +95,7 @@ module.exports = function (RED) {
             node.send(msg);
           }  
         });		
-      } else if (config.mode === 'startconverse' || config.mode === 'converse') {
+      } else if (config.mode === 'startconverse' || config.mode === 'converse' || config.mode === 'getprofile') {
           dialogid = config.dialog;
           clientid = config.clientid;
           converseid = config.converse;
@@ -111,8 +112,8 @@ module.exports = function (RED) {
             node.error(message, msg);	
           }			
 			
-          if (config.mode === 'converse') {
-            if (!clientid || "" === clientid) {
+          if (config.mode === 'converse'  || config.mode === 'getprofile') {
+            if (!clientid || "" == clientid) {
               if (msg.dialog_params && "client_id" in msg.dialog_params) {
                 clientid = msg.dialog_params["client_id"];
               }	
@@ -122,7 +123,7 @@ module.exports = function (RED) {
                 converseid = msg.dialog_params["converse_id"];
               }	
             }				  
-            if (!clientid || "" === clientid) {
+		    if (!clientid || "" === clientid) {
               var message = "Missing Client ID";
               node.status({fill:"red", shape:"dot", text:message});	
               node.error(message, msg);	
@@ -138,18 +139,35 @@ module.exports = function (RED) {
 
           params.dialog_id = dialogid;
           params.input = msg.payload;
-          node.status({fill:"blue", shape:"dot", text:"Starting Dialog Conversation"});
-          dialog.conversation (params, function (err, dialog_data) {
-            if (err) {
-              node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
-              node.error(err, msg);
-            } else {
-              node.status({fill:"green", shape:"dot", text:"dialog conversation successfull"});		  
-              msg.dialog = dialog_data;		  
-              msg.payload = "Check msg.dialog dialog data";
-              node.send(msg);
-            }  
-          });						
+		  
+          if (config.mode === 'startconverse' || config.mode === 'converse') {			  
+            node.status({fill:"blue", shape:"dot", text:"Starting Dialog Conversation"});
+            dialog.conversation (params, function (err, dialog_data) {
+              if (err) {
+                node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
+                node.error(err, msg);
+              } else {
+                node.status({fill:"green", shape:"dot", text:"dialog conversation successfull"});		  
+                msg.dialog = dialog_data;		  
+                msg.payload = "Check msg.dialog dialog data";
+                node.send(msg);
+              }   
+            });
+          }
+          else {
+            node.status({fill:"blue", shape:"dot", text:"Requesting dialog profile variables"});
+            dialog.getProfile (params, function (err, dialog_data) {
+              if (err) {
+                node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
+                node.error(err, msg);
+              } else {
+                node.status({fill:"green", shape:"dot", text:"Profile data retrieved successfully"});		  
+                msg.dialog = dialog_data;		  
+                msg.payload = "Check msg.dialog dialog data";
+                node.send(msg);
+              }  
+            });
+         }			  
       } 	  
     });
   }

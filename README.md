@@ -11,8 +11,8 @@ See the documentation in [node-red-labs](https://github.com/watson-developer-clo
 
 
 ## Watson Dialog Service
-This service lists available dialogs and is able to start and runs a conversation against the dialog. Support for
-profile settings has yet to be completed. Dialogs must have already been created. 
+This service lists available dialogs and is able to start and runs a conversation against the dialog. 
+Dialogs must have already been created. 
 
 The the drop-down menu in the node configuration window is used to select the required mode.
 
@@ -27,6 +27,11 @@ The salutation from the service will be returned on **msg.dialog**
 
 ###Conversation Mode
 The conversation is continued. The response from the service will be returned on **msg.dialog**
+	
+###List Profile Variables Mode
+The profile variables as set by the dialog are retrieved. These can be used by an applicaiton to 
+determine the state of the conversation, and to take any appropriate action.
+ The response from the service will be returned on **msg.dialog**	
 	
 ## License
 Full license text is available in [LICENSE](LICENSE).

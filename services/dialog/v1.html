@@ -84,6 +84,7 @@
             <option value="list">List Available Dialogs</option>
             <option value="startconverse">Start Conversation</option>
             <option value="converse">Continue Conversation</option>
+            <option value="getprofile">List Profile Variables</option>					
         </select>
     </div>
     <div class="form-row mode dialog">
@@ -126,6 +127,19 @@ return msg;
     <p>The Client and Conversation IDs can be passed either as properties or through a function</p>	
 	<pre><code>
 msg.dialog_params = {};
+msg.dialog_params["client_id"] = "client id";
+msg.dialog_params["converse_id"] = "conversation id";
+return msg;
+	</code></pre>	
+    <p>The response from the service will be returned on <b>msg.dialog</b>.</p>
+    <p></p>
+    <p><b>List Profile Variables</b>.</p>
+    <p>Retrieves the profile variables that the dialog has set during the conversation. These can be
+	used to determine the state of the conversation, and by an applicaiton to perform any further actions.</p> 
+    <p>The Dialog, Client and Conversation IDs can be passed either as properties or through a function</p>	
+	<pre><code>
+msg.dialog_params = {};
+msg.dialog_params["dialog_id"] = "dialog id";
 msg.dialog_params["client_id"] = "client id";
 msg.dialog_params["converse_id"] = "conversation id";
 return msg;
