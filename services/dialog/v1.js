@@ -81,20 +81,10 @@ module.exports = function (RED) {
       });	  
 
       var params = {}
-      if (config.mode === 'list') {
-        node.status({fill:"blue", shape:"dot", text:"requesting list of dialogs"});	  
-
-        dialog.getDialogs({}, function (err, dialogs) {
-          if (err) {
-            node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
-            node.error(err, msg);
-          } else {
-            node.status({fill:"green", shape:"dot", text:"dialog list successfully retrieved"});		  
-            msg.dialog = dialogs;		  
-            msg.payload = "Check msg.dialog for list of dialogs";
-            node.send(msg);
-          }  
-        });		
+      if (config.mode === 'create') {
+        performCreate(node,dialog,msg);
+      } else if (config.mode === 'list') {
+        performList(node,dialog,msg);
       } else if (config.mode === 'startconverse' || config.mode === 'converse' || config.mode === 'getprofile') {
           dialogid = config.dialog;
           clientid = config.clientid;
@@ -171,7 +161,66 @@ module.exports = function (RED) {
       } 	  
     });
   }
- 
+
+  // This function creates a new dialog template. The name must be unique, the file can be in any
+  // accepted format, and be either a text file or a binary buffer.
+  function performCreate(node,dialog,msg) {
+    var params = {}
+    node.status({fill:"blue", shape:"dot", text:"requesting create of new dialog template"});	 
+    if ('file' in msg.dialog_params && 'dialog_name' in msg.dialog_params) {
+		
+      var stream = require( "stream" );
+      var bufferStream = new stream.Readable();
+	  bufferStream.push(msg.dialog_params['file']);
+      bufferStream.push(null);
+	  
+	  // Note: This line is very important. If forces the buffer to be read, allowing it to 
+      // be sucessfully passed through to the dialog service.
+      bufferStream.read();
+	  
+      params.file = bufferStream;
+      params.name = msg.dialog_params['dialog_name'];
+
+      dialog.createDialog(params, function(err, dialog_data){
+            if (err) {
+              node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
+              node.error(err, msg);
+            } else {
+              node.status({fill:"green", shape:"dot", text:"Dialog template created successfully"});		  
+              msg.dialog = dialog_data;		  
+              msg.payload = "Check msg.dialog dialog data";
+              node.send(msg);
+            }  		  
+      });	  	
+    } else if (! 'file' in msg.dialog_params) {
+      var errtxt = "Missing Dialog template file";
+      node.status({fill:"red", shape:"ring", text:errtxt}); 		
+      node.error(errtxt, msg); 
+    }  else {
+      errtxt = "Dialog Name not specified";
+      node.status({fill:"red", shape:"ring", text:errtxt}); 		
+      node.error(errtxt, msg); 
+    }   
+  }
+
+  // This function performs the operation to fetch a list of all dialog templates
+  function performList(node,dialog,msg) {
+    node.status({fill:"blue", shape:"dot", text:"requesting list of dialogs"});	  
+    
+	dialog.getDialogs({}, function(err, dialogs){
+	  if (err) {
+        node.status({fill:"red", shape:"ring", text:"call to dialog service failed"});
+        node.error(err, msg);		
+      } else {
+        node.status({fill:"green", shape:"dot", text:"dialog list successfully retrieved"});
+        msg.dialog = dialogs;
+        msg.payload = "Check msg.dialog for list of dialogs";
+        node.send(msg);
+      }		  
+    });
+  }		
+
+  
   //Register the node as service-dialog to nodeRED 
   RED.nodes.registerType('service-dialog', 
                          WatsonDialogNode, 

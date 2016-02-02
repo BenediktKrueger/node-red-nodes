@@ -12,9 +12,21 @@ See the documentation in [node-red-labs](https://github.com/watson-developer-clo
 
 ## Watson Dialog Service
 This service lists available dialogs and is able to start and runs a conversation against the dialog. 
-Dialogs must have already been created. 
 
 The the drop-down menu in the node configuration window is used to select the required mode.
+
+###Create Mode
+Creates a new dialog. The dialog needs to be passd in as a file in this example, it has been fetched using a HTTP request node in 
+msg.payload. The file name 
+
+```
+msg.dialog_params = {};
+msg.dialog_params["file"] = msg.payload;
+msg.dialog_params["dialog_name"] = "Pizza Ordering";
+return msg;
+```
+
+If successful he dialog id is returned at **msg.dialog**
 
 ###List Mode
 A list of the available dialogs is returned. For each a dialog id is given, this id is needed to start a conversation.

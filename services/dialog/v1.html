@@ -27,7 +27,7 @@
             color: "rgb(140, 198, 63)",
             inputs: 1,
             outputs: 1,
-            icon: "dialog.png",
+            icon: "v1.png",
             paletteLabel: "Dialog Service Node",
             label: function() {
                 return this.name || "Dialog Node";
@@ -40,7 +40,7 @@
             oneditprepare: function() {					
 				$('#node-input-mode').change(function () {
 					var mode = $('#node-input-mode').val();
-					if (mode == "list") {
+					if (mode == "list" || mode == "create") {
 						$('.form-row.mode.dialog').hide();
 					} else if (mode == "startconverse") {
 						$('.form-row.mode.dialog').show();
@@ -81,6 +81,7 @@
     <div class="form-row">
         <label for="node-input-mode"><i class="fa fa-question"></i> Mode</label>
         <select type="text" id="node-input-mode" style="display: inline-block; width: 70%;" >
+            <option value="create">Create a new Dialog</option>
             <option value="list">List Available Dialogs</option>
             <option value="startconverse">Start Conversation</option>
             <option value="converse">Continue Conversation</option>
@@ -105,6 +106,13 @@
 <script type="text/x-red" data-help-name="service-dialog">
     <p>Watson Dialog Service, Lists available dialogs and runs a conversation against the dialog</p>
     <p>Use the drop-down menu in the node configuration window to select the required mode.</p>
+    <p></p>
+    <p><b>Create Mode</b>.</p>
+    <p>Creats a dialog template. A dialog file with a valid extension (.mct, .json or .xml) is 
+	required as input. IF the dialog is created successfully the dialog id is returned.</p>
+	<p>The file should be provided as msg.dialog_params["file"]</p>
+	<p>The name for the dialog template should be provided as msg.dialog_params["dialog_name"]</p>
+    <p>The dialog id from the service will be returned on <b>msg.dialog</b>.</p>
     <p></p>
     <p><b>List Mode</b>.</p>
     <p>A list of the available dialogs is returned. For each a dialog id is given, this id is needed to 
