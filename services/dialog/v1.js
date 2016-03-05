@@ -85,7 +85,7 @@ module.exports = function (RED) {
         performCreate(node,dialog,msg);
       } else if (config.mode === 'list') {
         performList(node,dialog,msg);
-      } else if (config.mode === 'startconverse' || config.mode === 'converse' || config.mode === 'getprofile') {
+      } else if (config.mode === 'startconverse' || config.mode === 'converse' || config.mode === 'getprofile' || config.mode === 'updateprofile') {
           dialogid = config.dialog;
           clientid = config.clientid;
           converseid = config.converse;
@@ -102,7 +102,7 @@ module.exports = function (RED) {
             node.error(message, msg);	
           }			
 			
-          if (config.mode === 'converse'  || config.mode === 'getprofile') {
+          if (config.mode === 'converse'  || config.mode === 'getprofile' || config.mode === 'updateprofile') {
             if (!clientid || "" == clientid) {
               if (msg.dialog_params && "client_id" in msg.dialog_params) {
                 clientid = msg.dialog_params["client_id"];
@@ -144,7 +144,7 @@ module.exports = function (RED) {
               }   
             });
           }
-          else {
+          if (config.mode === 'getprofile') {
             node.status({fill:"blue", shape:"dot", text:"Requesting dialog profile variables"});
             dialog.getProfile (params, function (err, dialog_data) {
               if (err) {
@@ -157,7 +157,21 @@ module.exports = function (RED) {
                 node.send(msg);
               }  
             });
-         }			  
+         }
+            else {
+            node.status({fill:"blue", shape:"dot", text:"Updating dialog profile variables"});
+            dialog.updateProfile (params, function (err, dialog_data) {
+              if (err) {
+                node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
+                node.error(err, msg);
+              } else {
+                node.status({fill:"green", shape:"dot", text:"Profile data updated successfully"});		  
+                msg.dialog = dialog_data;		  
+                msg.payload = "Check msg.dialog dialog data";
+                node.send(msg);
+              }  
+            });
+         }
       } 	  
     });
   }

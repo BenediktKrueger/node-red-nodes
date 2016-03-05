@@ -44,6 +44,11 @@ The conversation is continued. The response from the service will be returned on
 The profile variables as set by the dialog are retrieved. These can be used by an applicaiton to 
 determine the state of the conversation, and to take any appropriate action.
  The response from the service will be returned on **msg.dialog**	
+
+###Update Profile Variables Mode
+The profile variables as provided in the msg.dialog will be set.
+The response from the service will be returned on **msg.dialog**
+ 
 	
 ## License
 Full license text is available in [LICENSE](LICENSE).

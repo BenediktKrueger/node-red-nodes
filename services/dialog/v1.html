@@ -86,6 +86,7 @@
             <option value="startconverse">Start Conversation</option>
             <option value="converse">Continue Conversation</option>
             <option value="getprofile">List Profile Variables</option>					
+            <option value="updateprofile">Update Profile Variables</option>	
         </select>
     </div>
     <div class="form-row mode dialog">
@@ -144,6 +145,10 @@ return msg;
     <p><b>List Profile Variables</b>.</p>
     <p>Retrieves the profile variables that the dialog has set during the conversation. These can be
 	used to determine the state of the conversation, and by an applicaiton to perform any further actions.</p> 
+    <p>The Dialog, Client and Conversation IDs can be passed either as properties or through a function</p>	
+    <p></p>
+    <p><b>Update Profile Variables</b>.</p>
+    <p>Updates the profile variables that the dialog has set during the conversation.</p> 
     <p>The Dialog, Client and Conversation IDs can be passed either as properties or through a function</p>	
 	<pre><code>
 msg.dialog_params = {};
