@@ -129,6 +129,7 @@ module.exports = function (RED) {
 
           params.dialog_id = dialogid;
           params.input = msg.payload;
+          params.name_values = [];
 		  
           if (config.mode === 'startconverse' || config.mode === 'converse') {			  
             node.status({fill:"blue", shape:"dot", text:"Starting Dialog Conversation"});
@@ -160,6 +161,7 @@ module.exports = function (RED) {
          }
             else {
             node.status({fill:"blue", shape:"dot", text:"Updating dialog profile variables"});
+            params.name_values=msg.payload;
             dialog.updateProfile (params, function (err, dialog_data) {
               if (err) {
                 node.status({fill:"red", shape:"ring", text:"call to dialog service failed"}); 
