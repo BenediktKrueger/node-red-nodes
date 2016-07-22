@@ -9,7 +9,8 @@
   },
   "node-red": {
     "nodes": {
-      "wdc-dialog1": "services/dialog/v1.js"
+      "wdc-dialog1": "services/dialog/v1.js",
+      "doc-conv": "services/dialog/v1.js"
     }
   }
 }
