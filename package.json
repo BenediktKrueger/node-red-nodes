@@ -10,7 +10,7 @@
   "node-red": {
     "nodes": {
       "wdc-dialog1": "services/dialog/v1.js",
-      "doc-conv": "services/dialog/v1.js"
+      "doc-conv": "services/DocumentCon/v1.js"
     }
   }
 }
