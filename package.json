@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-ben",
+  "name": "node-red-contrib-bene",
   "version": "0.0.1",
   "description": "A collection of Watson Developer Cloud services nodes for NodeRED.",
   "dependencies": {
